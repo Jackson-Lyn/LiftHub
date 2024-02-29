@@ -13,6 +13,11 @@
                 Progression Tracker
             </button>
           </div>
+          <div class="flex justify-center"> <!-- Center the button -->
+            <button @click="oneRepMax" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded"> <!-- Set a fixed width for all buttons -->
+                1 Rep Max Calculator
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -20,9 +25,9 @@
   
   
   <script>
-  import store from "../stores/index";
+  import store from "../../stores/index";
   import { computed } from "vue";
-  import { supabase } from "../lib/supabaseClient";
+  import { supabase } from "../../lib/supabaseClient";
   import { useRouter } from "vue-router";
   export default {
     setup() {
@@ -41,8 +46,11 @@
       const progressTracker = () => {
         router.push({ name: "progressTracker" });
       };
+      const oneRepMax = () => {
+        router.push({ name: "oneRepMax" });
+      };
   
-      return { liftHistory, progressTracker, user };
+      return { liftHistory, progressTracker, oneRepMax, user };
     },
   };
   </script>

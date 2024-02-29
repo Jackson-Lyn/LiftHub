@@ -32,22 +32,22 @@ const router = createRouter({
     {
       path: '/group',
       name: 'groupDashboard',
-      component: () => import('../views/GroupDashboard.vue')
+      component: () => import('../views/GroupDashboard/GroupDashboard.vue')
     },
     {
       path: '/solo',
       name: 'soloDashboard',
-      component: () => import('../views/SoloDashboard.vue')
+      component: () => import('../views/SoloDashboard/SoloDashboard.vue')
     },
     {
       path: '/join-group',
       name: 'joinGroup',
-      component: () => import('../views/JoinGroup.vue')
+      component: () => import('../views/GroupDashboard/JoinGroup.vue')
     },
     {
       path: '/leaderboard',
       name: 'groupLeaderboard',
-      component: () => import('../views/groupLeaderboard.vue')
+      component: () => import('../views/GroupDashboard/groupLeaderboard.vue')
     },
     {
       path: '/profile',
@@ -57,17 +57,22 @@ const router = createRouter({
     {
       path: '/lift-history',
       name: 'liftHistory',
-      component: () => import('../views/PaymentDetails/LiftHistory.vue')
+      component: () => import('../views/SoloDashboard/LiftHistory.vue')
     },
     {
       path: '/progress-tracker',
       name: 'progressTracker',
-      component: () => import('../views/PaymentDetails/ProgressTracker.vue')
+      component: () => import('../views/SoloDashboard/ProgressTracker.vue')
     },
     {
       path: '/p4p-leaderboard',
       name: 'p4pLeaderboard',
-      component: () => import('../views/P4PLeaderboard.vue')
+      component: () => import('../views/GroupDashboard/P4PLeaderboard.vue')
+    },
+    {
+      path: '/1rm',
+      name: 'oneRepMax',
+      component: () => import('../views/SoloDashboard/OneRepMax.vue')
     },
     {
       path: '/admin',

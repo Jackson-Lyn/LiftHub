@@ -25,9 +25,9 @@
   
   
   <script>
-  import store from "../stores/index";
+  import store from "../../stores/index";
   import { computed } from "vue";
-  import { supabase } from "../lib/supabaseClient";
+  import { supabase } from "../../lib/supabaseClient";
   import { useRouter } from "vue-router";
 import P4PLeaderboard from "./P4PLeaderboard.vue";
   export default {

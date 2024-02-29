@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import store from "../stores/index";
+import store from "../../stores/index";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
