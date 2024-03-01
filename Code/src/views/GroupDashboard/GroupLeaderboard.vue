@@ -24,21 +24,24 @@
 		  </thead>
 		  <tbody>
 			<tr v-for="user in users" :key="user.id" class="hover:bg-gray-100">
-			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
-				<span class="text-gray-700 text-sm">{{ user.name }}</span>
-			  </td>
-			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
-				<span class="text-gray-700 text-sm">{{ user.squat }}</span>
-			  </td>
-			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
-				<span class="text-gray-700 text-sm">{{ user.bench }}</span>
-			  </td>
-			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
-				<span class="text-gray-700 text-sm">{{ user.deadlift }}</span>
-			  </td>
-			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
-				<span class="text-gray-700 text-sm">{{ user.total }}</span>
-			  </td>
+      <td class="border-dashed border-t border-gray-200 px-6 py-3">
+        <!-- Use router-link to navigate to the userProfile page -->
+        <router-link :to="{ name: 'userProfile'}" class="text-blue-500 hover:underline">
+          {{ user.name }}
+        </router-link>
+      </td>
+      <td class="border-dashed border-t border-gray-200 px-6 py-3">
+        <span class="text-gray-700 text-sm">{{ user.squat }}</span>
+      </td>
+      <td class="border-dashed border-t border-gray-200 px-6 py-3">
+        <span class="text-gray-700 text-sm">{{ user.bench }}</span>
+      </td>
+      <td class="border-dashed border-t border-gray-200 px-6 py-3">
+        <span class="text-gray-700 text-sm">{{ user.deadlift }}</span>
+      </td>
+      <td class="border-dashed border-t border-gray-200 px-6 py-3">
+        <span class="text-gray-700 text-sm">{{ user.total }}</span>
+      </td>
 			</tr>
 		  </tbody>
 		</table>
