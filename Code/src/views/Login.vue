@@ -56,23 +56,38 @@ import { ref } from "vue";
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "vue-router";
 
+import { setUserEmail } from "../stores/userStore"; // Import the user store
 export default {
   name: "login",
   setup() {
-    // Create data / vars
     const router = useRouter();
     const email = ref(null);
     const password = ref(null);
     const errorMsg = ref(null);
 
-    // Login function
     const login = async () => {
       try {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { user, error } = await supabase.auth.signInWithPassword({
           email: email.value,
           password: password.value,
         });
+
         if (error) throw error;
+
+        // Assuming your 'users' table has an 'Username' column
+        const { data, fetchError } = await supabase
+          .from('users')
+          .select('Username')
+          .eq('Username', email.value) // Using 'Username' column for email
+          .single();
+
+        if (fetchError) throw fetchError;
+
+        if (user && data && data.Username) {
+          // Store the user's email in the global state
+          setUserEmail(data.Username);
+        }
+
         router.push({ name: "Home" });
       } catch (error) {
         errorMsg.value = `Error: ${error.message}`;

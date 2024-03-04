@@ -18,6 +18,11 @@
             Profile
           </button>
         </div>
+        <div class="flex justify-center">
+          <button @click="dbTest" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded">
+            Test
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -49,8 +54,11 @@ export default {
     const userProfile = () => {
       router.push({ name: "userProfile" });
     };
+    const dbTest = () => {
+      router.push({ name: "dbTest" });
+    };
 
-    return { userProfile, groupDashboard, user, soloDashboard };
+    return { userProfile, groupDashboard, user, soloDashboard, dbTest };
   },
 };
 </script>

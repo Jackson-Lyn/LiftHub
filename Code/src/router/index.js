@@ -75,6 +75,11 @@ const router = createRouter({
       component: () => import('../views/SoloDashboard/OneRepMax.vue')
     },
     {
+      path: '/dbtesting',
+      name: 'dbTest',
+      component: () => import('../views/Testing/DBTest.vue')
+    },
+    {
       path: '/admin',
       name: 'Admin',
       component: () => import('../views/Admin/AdminDashboard.vue')
