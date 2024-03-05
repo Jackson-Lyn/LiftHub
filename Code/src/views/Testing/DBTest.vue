@@ -69,7 +69,8 @@ export default {
         if (error) {
           console.error('Error fetching user data:', error.message);
         } else {
-          this.users = data;
+          // Sort the users array based on total in descending order
+          this.users = data.sort((a, b) => this.calculateTotal(b) - this.calculateTotal(a));
         }
       } catch (error) {
         console.error('Error fetching user data:', error.message);
@@ -81,3 +82,4 @@ export default {
   }
 };
 </script>
+

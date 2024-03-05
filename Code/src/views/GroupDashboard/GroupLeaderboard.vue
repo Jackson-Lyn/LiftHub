@@ -23,25 +23,22 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr v-for="user in users" :key="user.id" class="hover:bg-gray-100">
-      <td class="border-dashed border-t border-gray-200 px-6 py-3">
-        <!-- Use router-link to navigate to the userProfile page -->
-        <router-link :to="{ name: 'userProfile'}" class="text-blue-500 hover:underline">
-          {{ user.name }}
-        </router-link>
-      </td>
-      <td class="border-dashed border-t border-gray-200 px-6 py-3">
-        <span class="text-gray-700 text-sm">{{ user.squat }}</span>
-      </td>
-      <td class="border-dashed border-t border-gray-200 px-6 py-3">
-        <span class="text-gray-700 text-sm">{{ user.bench }}</span>
-      </td>
-      <td class="border-dashed border-t border-gray-200 px-6 py-3">
-        <span class="text-gray-700 text-sm">{{ user.deadlift }}</span>
-      </td>
-      <td class="border-dashed border-t border-gray-200 px-6 py-3">
-        <span class="text-gray-700 text-sm">{{ user.total }}</span>
-      </td>
+			<tr v-for="user in users" :key="user.Username" class="hover:bg-gray-100">
+			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
+				{{ user.FirstName + ' ' + user.LastName }}
+			  </td>
+			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
+				<span class="text-gray-700 text-sm">{{ user.Squat }}</span>
+			  </td>
+			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
+				<span class="text-gray-700 text-sm">{{ user.Bench }}</span>
+			  </td>
+			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
+				<span class="text-gray-700 text-sm">{{ user.Deadlift }}</span>
+			  </td>
+			  <td class="border-dashed border-t border-gray-200 px-6 py-3">
+				<span class="text-gray-700 text-sm">{{ calculateTotal(user) }}</span>
+			  </td>
 			</tr>
 		  </tbody>
 		</table>
@@ -50,17 +47,40 @@
   </template>
   
   <script>
+  import { supabase } from "../../lib/supabaseClient";
+  
   export default {
 	data() {
 	  return {
-		users: [
-		  { id: 1, name: 'John Doe', squat: 250, bench: 200, deadlift: 300, total: 750 },
-		  { id: 2, name: 'Jane Doe', squat: 220, bench: 180, deadlift: 280, total: 680 },
-		  { id: 3, name: 'Bob Smith', squat: 200, bench: 160, deadlift: 260, total: 620 }
-		  // Add more users as needed
-		]
+		users: []
 	  };
+	},
+	async created() {
+	  // Fetch data from Supabase or another source
+	  await this.fetchUserData();
+	},
+	methods: {
+	  async fetchUserData() {
+		try {
+		  const { data, error } = await supabase
+			.from('users')
+			.select('*');
+  
+		  if (error) {
+			console.error('Error fetching user data:', error.message);
+		  } else {
+			// Sort the users array based on total in descending order
+			this.users = data.sort((a, b) => this.calculateTotal(b) - this.calculateTotal(a));
+		  }
+		} catch (error) {
+		  console.error('Error fetching user data:', error.message);
+		}
+	  },
+	  calculateTotal(user) {
+		return user.Squat + user.Bench + user.Deadlift;
+	  }
 	}
   };
   </script>
+  
   
