@@ -1,85 +1,63 @@
 <template>
   <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-semibold mb-6 text-gray-800">Leaderboard</h1>
-    <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
-      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
-        <thead>
-          <tr class="text-left">
-            <th class="bg-gray-800 text-white border-b border-gray-200 px-6 py-4 text-sm uppercase font-bold">
-              Name
-            </th>
-            <th class="bg-gray-800 text-white border-b border-gray-200 px-6 py-4 text-sm uppercase font-bold">
-              Squat
-            </th>
-            <th class="bg-gray-800 text-white border-b border-gray-200 px-6 py-4 text-sm uppercase font-bold">
-              Bench
-            </th>
-            <th class="bg-gray-800 text-white border-b border-gray-200 px-6 py-4 text-sm uppercase font-bold">
-              Deadlift
-            </th>
-            <th class="bg-gray-800 text-white border-b border-gray-200 px-6 py-4 text-sm uppercase font-bold">
-              Total
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.Username" class="hover:bg-gray-100">
-            <td class="border-dashed border-t border-gray-200 px-6 py-3">
-              {{ user.FirstName + ' ' + user.LastName }}
-            </td>
-            <td class="border-dashed border-t border-gray-200 px-6 py-3">
-              <span class="text-gray-700 text-sm">{{ user.Squat }}</span>
-            </td>
-            <td class="border-dashed border-t border-gray-200 px-6 py-3">
-              <span class="text-gray-700 text-sm">{{ user.Bench }}</span>
-            </td>
-            <td class="border-dashed border-t border-gray-200 px-6 py-3">
-              <span class="text-gray-700 text-sm">{{ user.Deadlift }}</span>
-            </td>
-            <td class="border-dashed border-t border-gray-200 px-6 py-3">
-              <span class="text-gray-700 text-sm">{{ calculateTotal(user) }}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h1 class="text-3xl font-semibold mb-6 text-gray-800">Add Progression Data</h1>
+    <form @submit.prevent="submitProgressionData" class="max-w-md">
+      <div class="mb-4">
+        <label for="squat" class="block text-gray-700 font-semibold">Squat (lbs):</label>
+        <input type="number" id="squat" v-model="formData.squat" required
+               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="bench" class="block text-gray-700 font-semibold">Bench Press (lbs):</label>
+        <input type="number" id="bench" v-model="formData.bench" required
+               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+      </div>
+      <div class="mb-4">
+        <label for="deadlift" class="block text-gray-700 font-semibold">Deadlift (lbs):</label>
+        <input type="number" id="deadlift" v-model="formData.deadlift" required
+               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+      </div>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
+    </form>
   </div>
 </template>
 
 <script>
-import { supabase } from "../../lib/supabaseClient";
-
 export default {
   data() {
     return {
-      users: []
+      formData: {
+        squat: null,
+        bench: null,
+        deadlift: null
+      }
     };
   },
-  async created() {
-    // Fetch data from Supabase or another source
-    await this.fetchUserData();
-  },
   methods: {
-    async fetchUserData() {
-      try {
-        const { data, error } = await supabase
-          .from('users')
-          .select('*');
+    submitProgressionData() {
+      // Perform any data validation here
+      // Prepare the progression data object
+      const progressionData = {
+        squat: parseInt(this.formData.squat),
+        bench: parseInt(this.formData.bench),
+        deadlift: parseInt(this.formData.deadlift),
+        // You may include additional fields like username or timestamp if needed
+      };
 
-        if (error) {
-          console.error('Error fetching user data:', error.message);
-        } else {
-          // Sort the users array based on total in descending order
-          this.users = data.sort((a, b) => this.calculateTotal(b) - this.calculateTotal(a));
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error.message);
-      }
-    },
-    calculateTotal(user) {
-      return user.Squat + user.Bench + user.Deadlift;
+      // Emit an event to the parent component with the progression data
+      this.$emit('submit', progressionData);
+
+      // Reset the form after submission
+      this.formData = {
+        squat: null,
+        bench: null,
+        deadlift: null
+      };
     }
   }
 };
 </script>
 
+<style scoped>
+/* Add your styles here */
+</style>
