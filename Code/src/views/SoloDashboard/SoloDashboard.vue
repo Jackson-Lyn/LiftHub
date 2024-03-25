@@ -5,7 +5,7 @@
         <div class="space-y-4">
           <div class="flex justify-center"> <!-- Center the button -->
             <button @click="liftHistory" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded"> <!-- Set a fixed width for all buttons -->
-              Lift History
+              Edit Profile
             </button>
           </div>
           <div class="flex justify-center"> <!-- Center the button -->

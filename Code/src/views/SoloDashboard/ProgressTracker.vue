@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-semibold mb-6 text-gray-800">Progress Tracker</h1>
+    <h1 class="text-3xl font-semibold mb-6 text-gray-800">Progression Tracker</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <div
         class="bg-white rounded-lg shadow p-4"
@@ -74,79 +74,72 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { supabase } from "../../lib/supabaseClient";
+import store from "../../stores/index";
+
 export default {
-  data() {
-    return {
-      progressionData: [
-        {
-          month: "January",
-          year: 2023,
-          squat: 200,
-          bench: 150,
-          deadlift: 250,
-          total: 600,
-          progress: {
-            squat: null,
-            bench: null,
-            deadlift: null,
-            total: null
-          },
-          note: "First month, no progress yet",
-        },
-        {
-          month: "February",
-          year: 2023,
-          squat: 210,
-          bench: 155,
-          deadlift: 260,
-          total: 625,
-          progress: {
-            squat: null,
-            bench: null,
-            deadlift: null,
-            total: null
-          },
-          note: "Progress from January to February",
-        },
-        {
-          month: "March",
-          year: 2023,
-          squat: 220,
-          bench: 160,
-          deadlift: 270,
-          total: 650,
-          progress: {
-            squat: null,
-            bench: null,
-            deadlift: null,
-            total: null
-          },
-          note: "Progress from February to March",
-        },
-        // Add more months as needed
-      ],
-    };
-  },
-  methods: {
-    calculateProgress() {
-      for (let i = 1; i < this.progressionData.length; i++) {
-        const previousMonth = this.progressionData[i - 1];
-        const monthData = this.progressionData[i];
-        monthData.progress.squat = this.calculatePercentageProgress(previousMonth.squat, monthData.squat);
-        monthData.progress.bench = this.calculatePercentageProgress(previousMonth.bench, monthData.bench);
-        monthData.progress.deadlift = this.calculatePercentageProgress(previousMonth.deadlift, monthData.deadlift);
-        monthData.progress.total = this.calculatePercentageProgress(previousMonth.total, monthData.total);
+  setup() {
+    const progressionData = ref([]);
+
+    const fetchProgressionData = async (email) => {
+      try {
+        const { data, error } = await supabase
+          .from("progressions")
+          .select("*")
+          .eq("username", email);
+
+        if (error) {
+          console.error("Error fetching progression data:", error.message);
+        } else {
+          progressionData.value = data.map(entry => ({
+            month: entry.month,
+            year: entry.year,
+            squat: entry.squat || 0,
+            bench: entry.bench || 0,
+            deadlift: entry.deadlift || 0,
+            total: entry.squat + entry.bench + entry.deadlift || 0,
+            progress: {
+              squat: null,
+              bench: null,
+              deadlift: null,
+              total: null
+            },
+            note: entry.note || ""
+          }));
+          calculateProgress();
+        }
+      } catch (error) {
+        console.error("Error fetching progression data:", error.message);
       }
-    },
-    calculatePercentageProgress(previousValue, currentValue) {
+    };
+
+    const calculateProgress = () => {
+      for (let i = 1; i < progressionData.value.length; i++) {
+        const previousMonth = progressionData.value[i - 1];
+        const monthData = progressionData.value[i];
+        monthData.progress.squat = calculatePercentageProgress(previousMonth.squat, monthData.squat);
+        monthData.progress.bench = calculatePercentageProgress(previousMonth.bench, monthData.bench);
+        monthData.progress.deadlift = calculatePercentageProgress(previousMonth.deadlift, monthData.deadlift);
+        monthData.progress.total = calculatePercentageProgress(previousMonth.total, monthData.total);
+      }
+    };
+
+    const calculatePercentageProgress = (previousValue, currentValue) => {
       if (previousValue === null || currentValue === null) {
         return null;
       }
       return ((currentValue - previousValue) / previousValue) * 100;
-    },
-  },
-  created() {
-    this.calculateProgress();
+    };
+
+    onMounted(async () => {
+      const userEmail = store.state.user ? store.state.user.email : null;
+      if (userEmail) {
+        await fetchProgressionData(userEmail);
+      }
+    });
+
+    return { progressionData };
   },
 };
 </script>

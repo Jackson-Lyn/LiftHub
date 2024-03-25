@@ -55,6 +55,11 @@ const router = createRouter({
       component: () => import('../views/UserProfile.vue')
     },
     {
+      path: '/add-progression',
+      name: 'AddProgession',
+      component: () => import('../views/AddProgression.vue')
+    },
+    {
       path: '/lift-history',
       name: 'liftHistory',
       component: () => import('../views/SoloDashboard/LiftHistory.vue')
