@@ -67,9 +67,14 @@
           v-model="monthData.note"
           placeholder="Add notes..."
           class="mt-4 p-2 border rounded w-full"
+          style="height: auto; overflow: hidden"
         ></textarea>
       </div>
     </div>
+    <!-- "+" button -->
+    <router-link to="/add-progression" class="fixed bottom-10 right-10 bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500">
+      +
+    </router-link>
   </div>
 </template>
 

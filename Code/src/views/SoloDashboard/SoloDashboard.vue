@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center items-center h-screen">
       <div class="bg-white rounded-lg shadow-lg p-8 w-96"> <!-- Adjust the width as per your requirement -->
-        <h1 class="text-2xl font-bold mb-4 text-center">Solo Lifter</h1>
+        <h1 class="text-2xl font-bold mb-4 text-center">Individual</h1>
         <div class="space-y-4">
           <div class="flex justify-center"> <!-- Center the button -->
             <button @click="liftHistory" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded"> <!-- Set a fixed width for all buttons -->

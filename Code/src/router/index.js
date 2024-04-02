@@ -60,7 +60,7 @@ const router = createRouter({
       component: () => import('../views/AddProgression.vue')
     },
     {
-      path: '/lift-history',
+      path: '/edit-profile',
       name: 'liftHistory',
       component: () => import('../views/SoloDashboard/LiftHistory.vue')
     },
@@ -80,7 +80,7 @@ const router = createRouter({
       component: () => import('../views/SoloDashboard/OneRepMax.vue')
     },
     {
-      path: '/dbtesting',
+      path: '/instructions',
       name: 'dbTest',
       component: () => import('../views/Testing/DBTest.vue')
     },

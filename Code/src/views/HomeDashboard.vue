@@ -10,7 +10,7 @@
         </div>
         <div class="flex justify-center">
           <button @click="soloDashboard" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded">
-            Solo Lifter
+            Individual
           </button>
         </div>
         <div class="flex justify-center">
@@ -20,7 +20,7 @@
         </div>
         <div class="flex justify-center">
           <button @click="dbTest" class="w-64 bg-red-500 hover:bg-red-800 text-white font-bold py-4 px-6 rounded">
-            Test
+            Instructions
           </button>
         </div>
       </div>

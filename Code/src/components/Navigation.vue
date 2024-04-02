@@ -2,7 +2,7 @@
   <header class="bg-rose-600 text-white">
     <nav class="container py-5 px-4 flex flex-col gap-4 items-center sm:flex-row">
       <div class="flex items-center gap-x-4">
-        <h1 class="text-white text-2xl font-bold">LiftHub</h1>
+        <h1 class="text-white text-2xl font-bold">The LiftHub</h1>
       </div>
       <ul class="flex flex-1 justify-end gap-x-10">
         <router-link class="cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
